@@ -2,8 +2,6 @@ package pl.skorupska.woodpeckertask;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.enums.CSVReaderNullFieldIndicator;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Repository;
 
 import java.io.FileNotFoundException;
@@ -18,7 +16,7 @@ import static java.util.stream.Collectors.groupingBy;
 @Repository
 public class UserRepo {
 
-    private final List<User1> users = new ArrayList<>();
+    private final List<User> users = new ArrayList<>();
 
     public UserRepo() throws FileNotFoundException {
         Set<String> validHobbySet = Stream
@@ -35,27 +33,27 @@ public class UserRepo {
             return;
         }
 
-        List<UserData> personDataList = new CsvToBeanBuilder<UserData>(new FileReader(filePath))
+        List<UserData> userDataList = new CsvToBeanBuilder<UserData>(new FileReader(filePath))
                 .withType(UserData.class)
                 .withSeparator(',')
                 .withFieldAsNull(CSVReaderNullFieldIndicator.BOTH)
                 .build()
                 .parse();
-        Map<String, List<UserData>> map = personDataList.stream()
-                .filter(person -> (emptyAgeFilter(person.getAge()) && hobbyFilter(person.getHobby(), validHobbySet)))
+        Map<String, List<UserData>> map = userDataList.stream()
+                .filter(userData -> (emptyAgeFilter(userData.getAge()) && hobbyFilter(userData.getHobby(), validHobbySet)))
                 .collect(groupingBy(UserData::getName));
 
         for (Map.Entry<String, List<UserData>> entry : map.entrySet()) {
             List<String> hobbies = entry.getValue().stream().map(UserData::getHobby).collect(Collectors.toList());
             Integer age = entry.getValue().get(0).getAge();
-            User1 personEntity = new User1(entry.getKey(), age, hobbies);
-            users.add(personEntity);
+            User user = new User(entry.getKey(), age, hobbies);
+            users.add(user);
         }
         System.out.println(users);
     }
 
-    private static boolean emptyAgeFilter(Integer personAge) {
-        return personAge != null;
+    private static boolean emptyAgeFilter(Integer userAge) {
+        return userAge != null;
     }
 
     private static boolean hobbyFilter(String hobby, Set<String> validHobbyList) {
@@ -63,7 +61,7 @@ public class UserRepo {
     }
 
 
-    public void add(User1 user) {
+    public void add(User user) {
         this.users.add(user);
     }
 
@@ -71,7 +69,7 @@ public class UserRepo {
         return users.size();
     }
 
-    public long numberOfPersonsAboveAge(int age) {
+    public long numberOfUserAboveAge(int age) {
         return users.stream()
                 .filter(user1 -> user1.getAge() > age)
                 .count();
@@ -79,7 +77,7 @@ public class UserRepo {
 
     public double averageAge() throws Exception {
         return users.stream()
-                .mapToInt(User1::getAge)
+                .mapToInt(User::getAge)
                 .average().orElseThrow(Exception::new);
     }
 
@@ -89,14 +87,18 @@ public class UserRepo {
                 .collect(Collectors.toSet());
     }
 
+    public List<String> allNameForBases(){
+        return  users.stream()
+                .map(User::getName)
+                .collect(Collectors.toList());
+    }
 
-//    public boolean nameForBase(String name){
-//        return users.stream()
-//                .filter(user1 -> user1.getName().equals(name))
-//                .collect();
-//    }
-
-
+    public User getNameInBase(String name) throws UserNotFoundException {
+        return  users.stream()
+                .filter(u->u.getName().equals(name))
+                .findFirst()
+                .orElseThrow(UserNotFoundException::new);
+    }
 
     @Override
     public String toString() {

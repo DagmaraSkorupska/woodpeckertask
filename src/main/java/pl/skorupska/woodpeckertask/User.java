@@ -3,12 +3,12 @@ package pl.skorupska.woodpeckertask;
 import java.util.List;
 
 
-public class User1 {
+public class User {
     private String name;
     private Integer age;
     private List<String> hobbyList;
 
-    public User1(String name, Integer age, List<String> hobbyList) {
+    public User(String name, Integer age, List<String> hobbyList) {
         this.name = name;
         this.age = age;
         this.hobbyList = hobbyList;
@@ -40,7 +40,7 @@ public class User1 {
 
     @Override
     public String toString() {
-        return "User1{" +
+        return "User{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
                 ", hobbyList=" + hobbyList +

@@ -6,6 +6,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
@@ -18,6 +20,8 @@ public class UserServiceTest {
     @Test
     public void testCountAllUser(){
         //Given
+//        User user = new User("Name", 20, null);
+//        when(userRepo.count()).thenReturn(user);
 
     }
 

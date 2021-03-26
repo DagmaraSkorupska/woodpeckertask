@@ -24,8 +24,8 @@ public class Controller {
     }
 
     @GetMapping(value = "user/{age}")
-    public long numberOfPersons(@PathVariable int age){
-        return userService.numberOfPersonsAboveAge(age);
+    public long numberOfUser(@PathVariable int age){
+        return userService.numberOfUserAboveAge(age);
     }
 
     @GetMapping(value = "userAverage")
@@ -38,11 +38,18 @@ public class Controller {
         return userService.listHobbyAll();
     }
 
-    @GetMapping(value = "user/{name}")
-    public boolean nameOfBase(@PathVariable String name)  {
-        return userService.name(name);
+    @GetMapping(value = "userName")
+    public List<String> allNameOfBases()  {
+        return userService.allNameOfBases();
     }
 
+    @GetMapping(value = "user/{name}")
+    public User nameBase(@PathVariable String name)  {
+        return userService.nameInBases(name);
+    }
 
-
+    @GetMapping(value = "user/randomJoke/{name}")
+    public String randomJoke(@PathVariable String name) throws BadApiRequestException {
+        return userService.randomJoke(name);
+    }
 }

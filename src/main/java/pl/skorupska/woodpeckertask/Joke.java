@@ -1,22 +1,22 @@
 package pl.skorupska.woodpeckertask;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
-
 public class Joke {
+    String id;
+    String joke;
 
-//    public static final String ENDPOINT_URL = "http://api.icndb.com/jokes/";
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public String jokeGet(){
-        RestTemplate rest = new RestTemplate();
-        ResponseEntity<String> exchange = rest.exchange(
-                "http://api.icndb.com/jokes/",
-                HttpMethod.GET,
-                HttpEntity.EMPTY,
-                String.class);
-        return exchange.getBody();
+    public String getJoke() {
+        return joke;
+    }
+
+    public void setJoke(String joke) {
+        this.joke = joke;
     }
 }

@@ -1,6 +1,5 @@
 package pl.skorupska.woodpeckertask;
 
-import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,7 +12,6 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -70,10 +68,10 @@ public class UserServiceTest {
         Set<String> hobby = new HashSet<>();
         hobby.add("Sport");
         hobby.add("Music");
-        when(userRepo.listHobbyAll()).thenReturn(hobby);
+        when(userRepo.listOfAllHobbies()).thenReturn(hobby);
 
         //When
-        Set<String> list = userService.listHobbyAll();
+        Set<String> list = userService.listOfAllHobbies();
 
         //than
         assertEquals(hobby, list);
@@ -85,39 +83,12 @@ public class UserServiceTest {
         List<String> names = new ArrayList<>();
         names.add("Anna");
         names.add("Tom");
-        when(userRepo.allNameForBases()).thenReturn(names);
+        when(userRepo.allNamesInFile()).thenReturn(names);
 
         //When
-        List<String> list = userService.allNameOfBases();
+        List<String> list = userService.allNamesInFile();
 
         //than
         assertEquals(names, list);
     }
-
-//    @Test
-//    public void testGetNameInBase() {
-//        //Given
-//        User user = new User("Anna", 20, null);
-//        when(userRepo.getNameInBase(user.getName())).thenReturn(user);
-//
-//        //When
-//        User test = userService.nameInBases("Anna");
-//
-//        //than
-//        assertEquals("Anna", test);
-//    }
-//
-//
-//
-//    private String jsonTxt = "{\"type\": \"success\", \"value\": {\"id\": 451, \"joke\": \"Xav Ducrohet writes code that optimizes itself.\"]}}";
-//
-//    @Test
-//    public void testGetJoke() throws Exception {
-//        Gson gson = new Gson();
-//        Joke jokeResponse = gson.fromJson(jsonTxt, Joke.class);
-//        String correct = "Xav Ducrohet writes code that optimizes itself.";
-//        assertNotNull(jokeResponse);
-//        assertEquals(correct, jokeResponse.getJoke());
-//    }
-
 }

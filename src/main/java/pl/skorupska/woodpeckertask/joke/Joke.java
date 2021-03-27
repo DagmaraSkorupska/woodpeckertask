@@ -1,8 +1,8 @@
-package pl.skorupska.woodpeckertask;
+package pl.skorupska.woodpeckertask.joke;
 
 public class Joke {
-    String id;
-    String joke;
+    private String id;
+    private String joke;
 
     public String getId() {
         return id;

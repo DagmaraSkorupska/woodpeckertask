@@ -1,7 +1,6 @@
-package pl.skorupska.woodpeckertask;
+package pl.skorupska.woodpeckertask.user;
 
 import java.util.List;
-
 
 public class User {
     private String name;
@@ -46,5 +45,4 @@ public class User {
                 ", hobbyList=" + hobbyList +
                 '}';
     }
-
 }

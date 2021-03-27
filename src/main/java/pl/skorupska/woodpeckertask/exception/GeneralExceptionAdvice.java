@@ -32,5 +32,10 @@ public class GeneralExceptionAdvice {
         return ex.getMessage();
     }
 
+    @ResponseBody
+    @ExceptionHandler(AverageException.class)
+    public String average(AverageException ex){
+        return ex.getMessage();
+    }
 }
 

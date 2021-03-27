@@ -1,4 +1,4 @@
-package pl.skorupska.woodpeckertask;
+package pl.skorupska.woodpeckertask.user;
 
 public class UserData {
 

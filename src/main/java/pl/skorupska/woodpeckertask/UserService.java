@@ -2,12 +2,9 @@ package pl.skorupska.woodpeckertask;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import pl.skorupska.woodpeckertask.exception.BadApiRequestException;
+import pl.skorupska.woodpeckertask.user.User;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -32,29 +29,15 @@ public class UserService {
         return userRepo.averageAge();
     }
 
-    public Set<String> listHobbyAll() {
-        return userRepo.listHobbyAll();
+    public Set<String> listOfAllHobbies() {
+        return userRepo.listOfAllHobbies();
     }
 
-    public List<String> allNameOfBases() {
-        return userRepo.allNameForBases();
+    public List<String> allNamesInFile() {
+        return userRepo.allNamesInFile();
     }
 
-    public User nameInBases(String name) {
-        return userRepo.getNameInBase(name);
-    }
-
-    public String randomJoke(String name) throws BadApiRequestException {
-        User user = userRepo.getNameInBase(name);
-        RestTemplate restTemplate = new RestTemplate();
-        Map<String, String> vars = new HashMap<>();
-        vars.put("name", user.getName());
-        vars.put("age", user.getAge().toString());
-        JokeResponse jokeResponse = restTemplate.getForObject("http://api.icndb.com/jokes/random?firstName={name}&lastName={age}", JokeResponse.class, vars);
-        if (jokeResponse == null) {
-            throw new BadApiRequestException();
-        } else {
-            return jokeResponse.getValue().getJoke();
-        }
+    public User getNameFromFile(String name) {
+        return userRepo.getNameFromFile(name);
     }
 }

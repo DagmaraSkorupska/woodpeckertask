@@ -6,7 +6,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import pl.skorupska.woodpeckertask.exception.BadApiRequestException;
+import pl.skorupska.woodpeckertask.joke.DownloadJoke;
+import pl.skorupska.woodpeckertask.user.User;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,86 +21,88 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(Controller.class)
-public class ControllerTest {
+public class ControllerTestSuite {
 
     private MockMvc mockMvc;
 
     @Autowired
-    public ControllerTest(MockMvc mockMvc) {
+    public ControllerTestSuite(MockMvc mockMvc) {
         this.mockMvc = mockMvc;
     }
 
     @MockBean
     private UserService userService;
+    @MockBean
+    private DownloadJoke downloadJoke;
 
     @Test
-    public void shouldUserCount() throws Exception {
+    public void shouldGetUserCount() throws Exception {
         //Given
         when(userService.countAllUser()).thenReturn(1);
         //When&Then
-        mockMvc.perform(get("/userCount")
+        mockMvc.perform(get("/users/count")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk());
     }
 
     @Test
-    public void shouldNumberOfUser() throws Exception {
+    public void shouldGetNumberOfUserAboveAge() throws Exception {
         //Given
         long user = 25;
         when(userService.numberOfUserAboveAge(10)).thenReturn(user);
         //When&Then
-        mockMvc.perform(get("/userAge/10")
+        mockMvc.perform(get("/users/ageAbove/10")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void shouldAverageAge() throws Exception {
+    public void shouldGetAverageAge() throws Exception {
         //Given
         double user = 25;
         when(userService.averageAge()).thenReturn(user);
         //When&Then
-        mockMvc.perform(get("/userAverage")
+        mockMvc.perform(get("/users/averageAge")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void shouldListAllHobby() throws Exception {
+    public void shouldGetListOfAllHobbies() throws Exception {
         //Given
         Set<String> hobby = new HashSet<>();
         hobby.add("Sport");
         hobby.add("Music");
-        when(userService.listHobbyAll()).thenReturn(hobby);
+        when(userService.listOfAllHobbies()).thenReturn(hobby);
         //When&Then
-        mockMvc.perform(get("/userAllHobby")
+        mockMvc.perform(get("/users/hobbies")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void shouldAllNameOfBases() throws Exception {
+    public void shouldGetAllNamesInFile() throws Exception {
         //Given
         List<String> names = new ArrayList<>();
         names.add("Anna");
         names.add("Tom");
-        when(userService.allNameOfBases()).thenReturn(names);
+        when(userService.allNamesInFile()).thenReturn(names);
         //When&Then
-        mockMvc.perform(get("/userAllName")
+        mockMvc.perform(get("/users/names")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void shouldNameOfBase() throws Exception {
+    public void shouldGetNameFromFile() throws Exception {
         //Given
         List<String> hobby = new ArrayList<>();
         hobby.add("Sport");
         hobby.add("Music");
         User user = new User("Anna", 20, hobby);
-        when(userService.nameInBases("Anna")).thenReturn(user);
+        when(userService.getNameFromFile("Anna")).thenReturn(user);
         //When&Then
-        mockMvc.perform(get("/userName/Anna")
+        mockMvc.perform(get("/user/byName/Anna")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
 

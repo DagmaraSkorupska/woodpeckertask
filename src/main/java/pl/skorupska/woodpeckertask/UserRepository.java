@@ -3,7 +3,10 @@ package pl.skorupska.woodpeckertask;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.enums.CSVReaderNullFieldIndicator;
 import org.springframework.stereotype.Repository;
+import pl.skorupska.woodpeckertask.exception.AverageException;
 import pl.skorupska.woodpeckertask.exception.UserNotFoundException;
+import pl.skorupska.woodpeckertask.user.User;
+import pl.skorupska.woodpeckertask.user.UserData;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -50,7 +53,6 @@ public class UserRepository {
             User user = new User(entry.getKey(), age, hobbies);
             users.add(user);
         }
-        System.out.println(users);
     }
 
     private static boolean emptyAgeFilter(Integer userAge) {
@@ -71,25 +73,26 @@ public class UserRepository {
                 .count();
     }
 
-    public double averageAge() throws Exception {
+    public double averageAge() throws AverageException {
         return users.stream()
                 .mapToInt(User::getAge)
-                .average().orElseThrow(Exception::new);
+                .average()
+                .orElseThrow(AverageException::new);
     }
 
-    public Set<String> listHobbyAll() {
+    public Set<String> listOfAllHobbies() {
         return users.stream()
                 .flatMap(user -> user.getHobbyList().stream())
                 .collect(Collectors.toSet());
     }
 
-    public List<String> allNameForBases() {
+    public List<String> allNamesInFile() {
         return users.stream()
                 .map(User::getName)
                 .collect(Collectors.toList());
     }
 
-    public User getNameInBase(String name) throws UserNotFoundException {
+    public User getNameFromFile(String name) throws UserNotFoundException {
         return users.stream()
                 .filter(u -> u.getName().equals(name))
                 .findFirst()

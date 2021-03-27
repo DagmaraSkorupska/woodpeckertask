@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import pl.skorupska.woodpeckertask.exception.BadApiRequestException;
+import pl.skorupska.woodpeckertask.joke.DownloadJoke;
+import pl.skorupska.woodpeckertask.user.User;
 
 import java.util.List;
 import java.util.Set;
@@ -13,44 +15,46 @@ import java.util.Set;
 public class Controller {
 
     private final UserService userService;
+    private final DownloadJoke downloadJoke;
 
     @Autowired
-    public Controller(UserService userService) {
+    public Controller(UserService userService, DownloadJoke downloadJoke) {
         this.userService = userService;
+        this.downloadJoke = downloadJoke;
     }
 
-    @GetMapping(value = "/userCount")
+    @GetMapping(value = "/users/count")
     public int userCount() {
         return userService.countAllUser();
     }
 
-    @GetMapping(value = "userAge/{age}")
+    @GetMapping(value = "users/ageAbove/{age}")
     public long numberOfUserAboveAge(@PathVariable int age) {
         return userService.numberOfUserAboveAge(age);
     }
 
-    @GetMapping(value = "userAverage")
+    @GetMapping(value = "users/averageAge")
     public double averageAge() throws Exception {
         return userService.averageAge();
     }
 
-    @GetMapping(value = "userAllHobby")
-    public Set<String> listAllHobby() {
-        return userService.listHobbyAll();
+    @GetMapping(value = "users/hobbies")
+    public Set<String> listOfAllHobbies() {
+        return userService.listOfAllHobbies();
     }
 
-    @GetMapping(value = "userAllName")
-    public List<String> allNameOfBases() {
-        return userService.allNameOfBases();
+    @GetMapping(value = "users/names")
+    public List<String> allNamesInFile() {
+        return userService.allNamesInFile();
     }
 
-    @GetMapping(value = "userName/{name}")
-    public User nameBase(@PathVariable String name) {
-        return userService.nameInBases(name);
+    @GetMapping(value = "user/byName/{name}")
+    public User getNameFromFile(@PathVariable String name) {
+        return userService.getNameFromFile(name);
     }
 
-    @GetMapping(value = "user/randomJoke/{name}")
+    @GetMapping(value = "user/joke/{name}")
     public String randomJoke(@PathVariable String name) throws BadApiRequestException {
-        return userService.randomJoke(name);
+        return downloadJoke.randomJoke(name);
     }
 }

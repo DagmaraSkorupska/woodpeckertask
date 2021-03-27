@@ -1,4 +1,4 @@
-package pl.skorupska.woodpeckertask;
+package pl.skorupska.woodpeckertask.joke;
 
 import java.io.Serializable;
 

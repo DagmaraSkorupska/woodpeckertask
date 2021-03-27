@@ -2,7 +2,6 @@ package pl.skorupska.woodpeckertask;
 
 import java.io.Serializable;
 
-
 public class JokeResponse implements Serializable {
 
     private String type;

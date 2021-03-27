@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import pl.skorupska.woodpeckertask.exception.BadApiRequestException;
 
 import java.util.List;
 import java.util.Set;
@@ -19,12 +20,12 @@ public class Controller {
     }
 
     @GetMapping(value = "/userCount")
-    public int userCount(){
+    public int userCount() {
         return userService.countAllUser();
     }
 
-    @GetMapping(value = "user/{age}")
-    public long numberOfUser(@PathVariable int age){
+    @GetMapping(value = "userAge/{age}")
+    public long numberOfUser(@PathVariable int age) {
         return userService.numberOfUserAboveAge(age);
     }
 
@@ -33,18 +34,18 @@ public class Controller {
         return userService.averageAge();
     }
 
-    @GetMapping(value = "userHobbyAll")
-    public Set<String> listHobbyAlly()  {
+    @GetMapping(value = "userAllHobby")
+    public Set<String> listAllHobby() {
         return userService.listHobbyAll();
     }
 
-    @GetMapping(value = "userName")
-    public List<String> allNameOfBases()  {
+    @GetMapping(value = "userAllName")
+    public List<String> allNameOfBases() {
         return userService.allNameOfBases();
     }
 
-    @GetMapping(value = "user/{name}")
-    public User nameBase(@PathVariable String name)  {
+    @GetMapping(value = "userName/{name}")
+    public User nameBase(@PathVariable String name) {
         return userService.nameInBases(name);
     }
 

@@ -5,10 +5,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class UserRepoTest {
-    private UserRepo userRepo;
+    private UserRepository userRepo;
 
     @Autowired
-    public UserRepoTest(UserRepo userRepo) {
+    public UserRepoTest(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
 }

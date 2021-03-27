@@ -1,6 +1,5 @@
 package pl.skorupska.woodpeckertask;
 
-
 public class UserData {
 
     private String name;

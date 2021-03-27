@@ -5,7 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import pl.skorupska.woodpeckertask.exception.BadApiRequestException;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -13,7 +16,7 @@ public class UserService {
     private final UserRepository userRepo;
 
     @Autowired
-    public UserService(UserRepository userRepo){
+    public UserService(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
 

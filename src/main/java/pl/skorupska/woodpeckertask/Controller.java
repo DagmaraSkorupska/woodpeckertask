@@ -25,7 +25,7 @@ public class Controller {
     }
 
     @GetMapping(value = "userAge/{age}")
-    public long numberOfUser(@PathVariable int age) {
+    public long numberOfUserAboveAge(@PathVariable int age) {
         return userService.numberOfUserAboveAge(age);
     }
 
